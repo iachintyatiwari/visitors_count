@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { WidgetStyle } from '../types';
+import { WidgetStyle } from '@/types';
 
 interface WidgetPreviewProps {
   styleConfig: WidgetStyle;

@@ -1,18 +1,19 @@
 import {prisma} from "../../lib/prisma";
+import {NextRequest} from "next/server"
 
 
-export async function POST(request: Request){
+export async function GET(request: NextRequest){
 
  try{
-
-    const {domainName} = await request.json();
+   const { searchParams } = new URL(request.url);
+  const domainName = searchParams.get("domainName");
+    // const {domainName} = await request.json();
  
     if(!domainName){
-
+        
         return Response.json("Domain name is required",{status:400});
     }
 
-    console.log("Domain Name:", domainName);
 
     try{
 

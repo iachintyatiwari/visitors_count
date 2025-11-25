@@ -12,13 +12,13 @@
   border: 1px solid #c026d3;
   box-shadow: 0 0 15px rgba(192, 38, 211, 0.3), inset 0 0 10px rgba(192, 38, 211, 0.1);
   text-shadow: 0 0 5px rgba(232, 121, 249, 0.5);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
 }
 .oc-widget-cyber:hover {
   box-shadow: 0 0 25px rgba(192, 38, 211, 0.5), inset 0 0 15px rgba(192, 38, 211, 0.2);
   border-color: #e879f9;
 }
-.oc-icon {
+.oc-widget-cyber .oc-icon {
   width: 16px;
   height: 16px;
   color: #e879f9;

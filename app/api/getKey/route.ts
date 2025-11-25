@@ -1,26 +1,24 @@
-import { NextRequest  } from "next/server";
 import {prisma} from "../../lib/prisma";
 
 
-export async function GET(request : NextRequest){
+export async function POST(request:Request){
 
-    const searchParams = request.nextUrl.searchParams;
-    const domainName = searchParams.get("domainName");
+    const {domainName} = await request.json();
     
     if(!domainName){
 
-        return new Response("Domain name is required", {status:400});
+        return  Response.json({error:"Domain name is required"}, {status:400});
     }
 
     try{
 
      const {id} = await prisma.visit_data.create({data:{domainName:domainName}});
 
-     return new Response(JSON.stringify(id));
+     return new Response(JSON.stringify({"id":id}));
 
     }catch(error){
         
-        return new Response("Domain Name allredy in use",{status:500});
+        return  Response.json({error:"Domain Name allredy in taken"},{status:500});
     }
     
 

@@ -12,6 +12,7 @@ export default function HowItWorks(){
     const [domain, setDomain] = useState('');
     const [isGenerating, setIsGenerating] = useState(false);
     const [copied, setCopied] = useState(false);
+    const [error,setError] = useState("");
     const [selectedStyleId, setSelectedStyleId] = useState<string>(WIDGET_STYLES[0].id);
      const selectedStyleConfig = WIDGET_STYLES.find(s => s.id === selectedStyleId) || WIDGET_STYLES[0];
      const styles=WIDGET_STYLES;
@@ -22,17 +23,48 @@ export default function HowItWorks(){
     setSelectedStyleId(id);
   };
 
-    const generateKey = () => {
-        if (!domain.trim()) return; // Simple validation
-        
-        setIsGenerating(true);
-        setTimeout(() => {
-            // Generate a mock key that looks real
-            const mockHash = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-            setApiKey(`pk_live_${mockHash}`);
-            setIsGenerating(false);
-        }, 1500);
-    };
+
+  async function handelGenrateKey(){
+
+    try{
+        if(!domain) {
+             setError("Enter Your Domain Name") ;
+             return
+            }
+             
+
+      setIsGenerating(true);    
+
+      const res = await fetch("/api/getKey",{
+        method:'POST',
+          headers: {
+    "Content-Type": "application/json",
+  },
+        body:JSON.stringify({domainName:domain})
+    });
+
+    const resBody = await res.json();
+    const apiKey = resBody.id;
+    setApiKey(apiKey);
+       if (!res.ok) {
+      setError(resBody.error || "Something went wrong");
+      return;
+    }
+
+  
+}catch(error:any){
+
+  setError(error.message || "Unexpected error occurred");
+
+
+}
+finally{
+       setIsGenerating(false);
+
+}
+
+
+  };
 
     const copyKey = () => {
         if(apiKey) {
@@ -139,10 +171,15 @@ export default function HowItWorks(){
                                                 />
                                             </div>
                                          </div>
+                                         {error && (
+                                       <div className="flex items-center gap-2 text-xs text-red-400 ">
+                                        <span className="font-medium">{error}</span>
+                                          </div>
+                                            )}
                                          
                                          <button 
-                                            onClick={generateKey}
-                                            disabled={isGenerating || !domain.trim()}
+                                            onClick={handelGenrateKey}
+                                            disabled={isGenerating}
                                             className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white rounded-lg font-bold transition-all shadow-lg shadow-orange-900/20 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 justify-center"
                                          >
                                              {isGenerating ? <Loader2 size={18} className="animate-spin" /> : <Key size={18} />}

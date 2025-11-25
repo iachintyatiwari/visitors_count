@@ -14,7 +14,7 @@
   font-weight: 600;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
-.oc-icon {
+.oc-widget-glass .oc-icon {
   width: 16px;
   height: 16px;
   color: #4f46e5;

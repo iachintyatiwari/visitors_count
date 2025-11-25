@@ -11,7 +11,7 @@
 .oc-widget-minimal .count {
   font-variant-numeric: tabular-nums;
 }
-.oc-icon {
+.oc-widget-minimal .oc-icon {
   width: 14px;
   height: 14px;
   opacity: 0.7;

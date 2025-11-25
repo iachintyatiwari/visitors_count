@@ -14,11 +14,12 @@
   border-right-color: #444;
   box-shadow: inset 0 0 8px rgba(34, 197, 94, 0.15);
   letter-spacing: 1px;
+  transition: border-color 0.12s cubic-bezier(0.4,0,0.2,1);
 }
 .oc-widget-retro:hover {
   border-color: #444;
 }
-.oc-icon {
+.oc-widget-retro .oc-icon {
   width: 15px;
   height: 15px;
   color: #22c55e;

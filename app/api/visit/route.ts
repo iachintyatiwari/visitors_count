@@ -9,7 +9,7 @@ export async function POST(request: Request){
     
    if(!Key){ 
     
-      return new Response("Domain name is required", {status:400});
+      return new Response("Key is Required", {status:400});
    }
 
 
@@ -25,7 +25,6 @@ export async function POST(request: Request){
        return  Response.json({ok:true})
 
     }catch(error){
-       
          return Response.json({ok:false, error:"Domain name not found"}, {status:404});
 
     }

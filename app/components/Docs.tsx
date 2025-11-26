@@ -3,21 +3,18 @@ import React from 'react';
 import { ArrowLeft, Book, Code, Shield, Zap, Globe, Layout, Terminal } from 'lucide-react';
 import Link from "next/link"
 
-interface DocsProps {
-  onBack: () => void;
-}
 
 export default function Docs (){
   return (
-    <div className="min-h-screen bg-dark-950 text-gray-300 pt-24 pb-20">
+    <div className="min-h-screen bg-dark-950 text-gray-300 pt-36 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumb / Back */}
 
-        <Link href="/"  className="group flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-orange-500 mb-8 transition-colors">
+        {/* <Link href="/"  className="group flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-orange-500 mb-8 transition-colors">
           <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
           Back to Home
-          </Link>
+          </Link> */}
 
         <div className="grid lg:grid-cols-[240px_1fr] gap-12">
           

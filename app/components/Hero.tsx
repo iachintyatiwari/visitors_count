@@ -49,7 +49,7 @@ export default function Hero(){
       const targetUrl = `https://${cleanDomain}`;
       
       // Use Microlink API for screenshot
-      const screenshotUrl = `https://api.microlink.io/?url=${targetUrl}&screenshot=true&meta=false&embed=screenshot.url&viewport.width=1280&viewport.height=950 `;
+      const screenshotUrl = `https://api.microlink.io/?url=${targetUrl}&screenshot=true&meta=false&embed=screenshot.url&viewport.width=1280&viewport.height=955 `;
       setActiveUrl(screenshotUrl);
 
       // Failsafe: remove loader after 8s if image hangs
@@ -140,7 +140,7 @@ export default function Hero(){
                     Visitor Analytics
                 </span>
                 {/* Underline decoration */}
-                <div className="absolute bottom-2 left-0 w-full h-3 bg-orange-500/20 -z-10 skew-x-12 rounded-sm origin-left scale-x-0 animate-[growX_1s_ease-out_1s_forwards]"></div>
+                {/* <div className="absolute bottom-2 left-0 w-full h-3 bg-orange-500/20 -z-10 skew-x-12 rounded-sm origin-left scale-x-0 animate-[growX_1s_ease-out_1s_forwards]"></div> */}
               </span>
             </h1>
             

@@ -23,7 +23,7 @@ export default function Footer() {
                 <div className="flex items-center gap-4 sm:gap-6">
                     <span>Designed for Developers</span>
                     <Heart size={12} className="text-red-500 fill-red-500 animate-pulse" />
-                    <a href="https://twitter.com/achintya" target="_blank" rel="noreferrer" className="hover:text-orange-500 transition-colors">
+                    <a href="https://twitter.com/iachintyatiwari" target="_blank" rel="noreferrer" className="hover:text-orange-500 transition-colors">
                         BY Achintya
                     </a>
                 </div>

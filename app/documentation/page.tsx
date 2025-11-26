@@ -3,11 +3,6 @@ import  Docs  from '../components/Docs';
 
 
 export default function Documentation(){
-
-      const navigateToHome = () => {
-      window.scrollTo(0,0);
-    //   setCurrentView('home');
-  }
     
 
     return(

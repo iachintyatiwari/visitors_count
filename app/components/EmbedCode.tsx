@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { WidgetStyle } from '@/types';
-import { Copy, Check, Download } from 'lucide-react';
+import { Copy, Check, Download,X, Minus, Maximize2, } from 'lucide-react';
 
 interface EmbedCodeProps {
   styleConfig: WidgetStyle;
@@ -13,8 +13,8 @@ export const EmbedCode: React.FC<EmbedCodeProps> = ({ styleConfig }) => {
   const [isTyping, setIsTyping] = useState(false);
 
   const codeSnippet = `<script 
-  src="https://cdn.opencount.com/widget.js" 
-  data-domain="example.com" 
+  src="http://localhost:3000/widget"
+  data-key="YOUR_UNIQUE_KEY"
   data-style="${styleConfig.id}">
 </script>`;
 
@@ -59,24 +59,31 @@ export const EmbedCode: React.FC<EmbedCodeProps> = ({ styleConfig }) => {
       
       {/* Mac-style Window Header */}
       <div className="flex items-center justify-between px-4 py-3 bg-white/[0.02] border-b border-white/5 select-none">
-        <div className="flex items-center gap-2">
-          <div className="flex gap-1.5">
-            <div className="w-2.5 h-2.5 rounded-full bg-[#FF5F56]/80"></div>
-            <div className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]/80"></div>
-            <div className="w-2.5 h-2.5 rounded-full bg-[#27C93F]/80"></div>
-          </div>
-          <span className="ml-3 text-[10px] text-gray-600 font-mono tracking-tight">index.html</span>
-        </div>
+       <div className="flex gap-2 group/window">
+                        <div className="w-3 h-3 rounded-full bg-[#FF5F56] flex items-center justify-center overflow-hidden cursor-default shadow-inner">
+                            <X size={8} className="text-black/60 opacity-0 group-hover/window:opacity-100 transition-opacity" strokeWidth={3} />
+                        </div>
+                        <div className="w-3 h-3 rounded-full bg-[#FFBD2E] flex items-center justify-center overflow-hidden cursor-default shadow-inner">
+                             <Minus size={8} className="text-black/60 opacity-0 group-hover/window:opacity-100 transition-opacity" strokeWidth={3} />
+                        </div>
+                        <div className="w-3 h-3 rounded-full bg-[#27C93F] flex items-center justify-center overflow-hidden cursor-default shadow-inner">
+                             <Maximize2 size={6} className="text-black/60 opacity-0 group-hover/window:opacity-100 transition-opacity" strokeWidth={3} />
+                        </div>
+                        
+                        <span className="ml-3 text-[10px] text-gray-600 font-mono tracking-tight">index.html</span>
+      
+                    </div>
+          
         
         <div>
-             <button 
+             {/* <button 
                 onClick={downloadCSS}
                 className="flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-medium bg-white/5 text-gray-500 hover:bg-white/10 hover:text-gray-300 transition-colors"
                 title="Download CSS file"
              >
                 <Download size={10} />
                 CSS
-             </button>
+             </button> */}
         </div>
       </div>
 
@@ -109,11 +116,11 @@ export const EmbedCode: React.FC<EmbedCodeProps> = ({ styleConfig }) => {
                     {'\n  '}
                     <span className="text-violet-400">src</span>
                     <span className="text-gray-600">=</span>
-                    <span className="text-emerald-400">"https://cdn.opencount.com/widget.js"</span>
+                    <span className="text-emerald-400">"http://localhost:3000/widget"</span>
                     {'\n  '}
-                    <span className="text-violet-400">data-domain</span>
+                    <span className="text-violet-400">data-key</span>
                     <span className="text-gray-600">=</span>
-                    <span className="text-emerald-400">"example.com"</span>
+                    <span className="text-emerald-400">"YOUR_UNIQUE_KEY"</span>
                     {'\n  '}
                     <span className="text-violet-400">data-style</span>
                     <span className="text-gray-600">=</span>

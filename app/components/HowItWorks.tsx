@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { StyleGrid } from './StyleGrid';
 import { EmbedCode } from './EmbedCode';
-import { Key, Copy, Check, Loader2, Sparkles, Globe } from 'lucide-react';
+import { Key, Copy, Check, Loader2, Globe } from 'lucide-react';
 import { WIDGET_STYLES } from '@/constants';
 
 
@@ -152,8 +152,7 @@ finally{
                                              </button>
                                          </div>
                                          <div className="flex items-center gap-2 text-xs text-green-400 bg-green-500/10 border border-green-500/20 px-3 py-1.5 rounded-full w-fit">
-                                             <Sparkles size={12} />
-                                             <span className="font-medium">Key active for {domain}</span>
+                                             <span className="font-medium">Key activated for {domain}</span>
                                          </div>
                                      </div>
                                  ) : (

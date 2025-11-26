@@ -12,7 +12,7 @@ export default function Navbar () {
         {/* Brand - Orange Square with Eye */}
         <div  className="flex items-center gap-3 cursor-pointer select-none group">
            {/* <div className="flex items-center justify-center w-9 h-9 rounded-lg shadow-lg shadow-orange-500/20 group-hover:rotate-6 transition-transform duration-300 overflow-hidden"> */}
-               <Link href = "/home">
+               <Link href = "/">
                <Image
                 src = '/logo.png'
                 alt = 'OpenCount Logo'

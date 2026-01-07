@@ -1,17 +1,19 @@
-.oc-widget-minimal {
+.oc-widget-plane-numbers {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   background-color: transparent;
-  color: #4b5563;
+  color: #ffffff; /* changed to white */
   font-family: 'Inter', sans-serif;
-  font-size: 13px;
+  font-size: 16px; /* increased number size */
   font-weight: 500;
 }
-.oc-widget-minimal .count {
+
+.oc-widget-plane-numbers .count {
   font-variant-numeric: tabular-nums;
 }
-.oc-widget-minimal .oc-icon {
+
+.oc-widget-plane-numbers .oc-icon {
   width: 14px;
   height: 14px;
   opacity: 0.7;

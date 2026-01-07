@@ -109,7 +109,37 @@ export const CSS_CYBER = `.oc-widget-cyber {
   filter: drop-shadow(0 0 2px currentColor);
 }`;
 
+export const CSS_PLANE_NUMBERS = `.oc-widget-plane-numbers {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: transparent;
+  color: #ffffff; /* changed to white */
+  font-family: 'Inter', sans-serif;
+  font-size: 16px; /* increased number size */
+  font-weight: 500;
+}
+
+.oc-widget-plane-numbers .count {
+  font-variant-numeric: tabular-nums;
+}
+
+.oc-widget-plane-numbers .oc-icon {
+  width: 14px;
+  height: 14px;
+  opacity: 0.7;
+}
+}`
+
+
 export const WIDGET_STYLES: WidgetStyle[] = [
+    {
+    id: "plane",
+    name: "Plane Numbers",
+    description: "Simple and clean with a focus on clarity. Works well on any background.",
+    cssContent: CSS_PLANE_NUMBERS,
+    className: "oc-widget-plane-numbers",
+  },
   {
     id: "bubble-1",
     name: "Dark Badge",
@@ -117,13 +147,13 @@ export const WIDGET_STYLES: WidgetStyle[] = [
     cssContent: CSS_BUBBLE_1,
     className: "oc-widget-bubble-1",
   },
-  {
-    id: "bubble-2",
-    name: "Light Border",
-    description: "Clean white pill with a subtle border. Fits anywhere.",
-    cssContent: CSS_BUBBLE_2,
-    className: "oc-widget-bubble-2",
-  },
+  // {
+  //   id: "bubble-2",
+  //   name: "Light Border",
+  //   description: "Clean white pill with a subtle border. Fits anywhere.",
+  //   cssContent: CSS_BUBBLE_2,
+  //   className: "oc-widget-bubble-2",
+  // },
   {
     id: "retro",
     name: "Retro Digital",

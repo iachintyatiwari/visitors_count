@@ -53,7 +53,7 @@ export const WidgetPreview: React.FC<WidgetPreviewProps> = ({ styleConfig, count
             <span className="count">{formattedCount}</span>
             <span className="text-[0.55em] opacity-70 uppercase tracking-wider font-medium mt-0.5">Visitors</span>
         </div>
-      </div>
+      </div>  
     </>
   );
 };

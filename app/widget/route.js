@@ -9,6 +9,11 @@ export async function GET() {
     const Key = scriptEl.getAttribute("data-key") || window.location.hostname;
     const style = scriptEl.getAttribute("data-style") || "bubble-1";
     const position = scriptEl.getAttribute("data-position") || "top-right";
+
+    // 🔥 NEW
+    const mode = scriptEl.getAttribute("data-mode") || "floating";
+    const targetId = scriptEl.getAttribute("data-target");
+
     const scriptUrl = new URL(scriptEl.src);
     const host = scriptUrl.origin;
 
@@ -44,77 +49,81 @@ export async function GET() {
     const container = document.createElement("div");
     container.id = "visitor-widget-container";
     container.setAttribute("aria-live", "polite");
-    
-    // Apply dynamic positioning
-    container.style.position = "fixed";
-    container.style.zIndex = "99999";
-    
-    // Parse position (e.g., "bottom-right", "top-left", etc.)
-    const [vertical, horizontal] = position.split('-');
 
-    // Set vertical position
-    if (vertical === 'top') {
-      container.style.top = "20px";
-      container.style.bottom = "auto";
-    } else {
-      container.style.bottom = "20px";
-      container.style.top = "auto";
-    }
+    /* ===========================
+       📍 POSITION HANDLING
+    ============================ */
 
-    // Set horizontal position
-    if (horizontal === 'left') {
-      container.style.left = "20px";
-      container.style.right = "auto";
-    } else {
-      container.style.right = "20px";
-      container.style.left = "auto";
-    }
+    if (mode === "inline") {
+      // INLINE MODE
+      container.style.position = "relative";
+      container.style.zIndex = "auto";
 
-    // Get icon based on style
-    function getIcon(styleId) {
-      if (styleId === 'retro') {
-        return '<circle cx="12" cy="12" r="5" fill="#22c55e" />';
-      } else if (styleId === 'cyber') {
-        return '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />';
-      } else if (styleId === 'bubble-1') {
-        return '<circle cx="12" cy="12" r="10" />';
+      let targetEl = null;
+
+      if (targetId) {
+        targetEl = document.getElementById(targetId);
+      } else if (scriptEl.parentElement && scriptEl.parentElement !== document.body) {
+        targetEl = scriptEl.parentElement;
+      }
+
+      if (!targetEl) {
+        console.warn("[Visitor Widget] Inline target not found, falling back to floating");
       } else {
-        return '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />';
+        targetEl.appendChild(container);
       }
     }
 
-    // Format count based on style
+    if (mode === "floating" || !container.parentElement) {
+      // FLOATING MODE (default)
+      container.style.position = "fixed";
+      container.style.zIndex = "99999";
+
+      const [vertical, horizontal] = position.split('-');
+
+      if (vertical === "top") {
+        container.style.top = "20px";
+      } else {
+        container.style.bottom = "20px";
+      }
+
+      if (horizontal === "left") {
+        container.style.left = "20px";
+      } else {
+        container.style.right = "20px";
+      }
+
+      document.body.appendChild(container);
+    }
+
+    function getIcon(styleId) {
+      if (styleId === "retro") return '<circle cx="12" cy="12" r="5" fill="#22c55e" />';
+      if (styleId === "cyber") return '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />';
+      if (styleId === "bubble-1") return '<circle cx="12" cy="12" r="10" />';
+      return '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5z" />';
+    }
+
     function formatCount(count, styleId) {
-      if (styleId === 'retro') {
-        return count.toString().padStart(6, '0');
-      }
-      return new Intl.NumberFormat('en-US').format(count);
+      return styleId === "retro"
+        ? count.toString().padStart(6, "0")
+        : new Intl.NumberFormat("en-IN").format(count);
     }
-
-    // Build HTML
-    const alignItems = style === 'bubble-1' ? 'center' : 'flex-start';
-    const marginLeft = style === 'bubble-1' ? '0' : '0.125rem';
 
     container.innerHTML = \`
       <div class="oc-widget-\${style}">
         <span class="oc-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-            \${getIcon(style)}
-          </svg>
+          <svg viewBox="0 0 24 24">\${getIcon(style)}</svg>
         </span>
-        <div class="oc-content" style="display: flex; flex-direction: column; align-items: \${alignItems}; line-height: 1; margin-left: \${marginLeft};">
+        <div class="oc-content">
           <span class="count">…</span>
-          <span style="font-size: 0.55em; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; margin-top: 0.125rem;">Visitors</span>
+          <span class="label">Visitors</span>
         </div>
       </div>
     \`;
-    document.body.appendChild(container);
 
-    // Check if visitor has already been tracked
-    const hasVisited = getCookie('visitor_tracked');
+    const hasVisited = getCookie("visitor_tracked");
 
     if (!hasVisited) {
-      // Track visit for new visitors
       fetch(host + "/api/visit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -136,36 +145,28 @@ export async function GET() {
       });
     }
 
-    // Fetch and update stats
     function updateStats() {
       fetch(host + "/api/getVisitor", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ Key: Key })
+        body: JSON.stringify({ Key })
       })
-      .then((r) => {
-        if (!r.ok) throw new Error("HTTP " + r.status);
-        return r.json();
-      })
-      .then((res) => {
-        const el = container.querySelector(".count");
-        if (el) el.textContent = formatCount(res.totalVisitors ?? 0, style);
-      })
-      .catch((err) => {
-        console.warn("[Visitor Widget] Stats fetch failed:", err);
-        const el = container.querySelector(".count");
-        if (el) el.textContent = "—";
-      });
+        .then(r => r.json())
+        .then(res => {
+          const el = container.querySelector(".count");
+          if (el) el.textContent = formatCount(res.totalVisitors ?? 0, style);
+        })
+        .catch(() => {
+          const el = container.querySelector(".count");
+          if (el) el.textContent = "—";
+        });
     }
 
-    // Initial load
     updateStats();
 
-    // Optional auto-refresh
     const refresh = scriptEl.getAttribute("data-refresh-time");
     if (refresh !== "false") {
-      const interval = parseInt(refresh) || 300000; // Default to 5 minutes
-      setInterval(updateStats, interval);
+      setInterval(updateStats, parseInt(refresh) || 300000);
     }
   } catch (err) {
     console.error("[Visitor Widget] Error:", err);
@@ -176,7 +177,7 @@ export async function GET() {
   return new Response(js, {
     headers: {
       "Content-Type": "application/javascript; charset=utf-8",
-      "Cache-Control": "public, max-age=3600, s-maxage=3600",
+      "Cache-Control": "public, max-age=3600",
       "Access-Control-Allow-Origin": "*"
     }
   });
